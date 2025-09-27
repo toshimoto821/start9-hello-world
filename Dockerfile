@@ -26,13 +26,16 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+
+# image: mongo:4.4.6-bionic@sha256:3d0e6df9fd5bc42cbf8ef8bc9e6c4e78f6f26c7157dbd7bdec72d202ab8ebe3a
+
 # Download and install MongoDB binaries directly for better architecture compatibility
 RUN ARCH=$(dpkg --print-architecture) \
     && echo "Building for architecture: $ARCH" \
     && if [ "$ARCH" = "arm64" ]; then \
-        wget https://fastdl.mongodb.org/linux/mongodb-linux-aarch64-ubuntu2004-4.4.29.tgz -O mongodb.tgz; \
+        wget https://fastdl.mongodb.org/linux/mongodb-linux-aarch64-ubuntu2004-4.4.6.tgz -O mongodb.tgz; \
     elif [ "$ARCH" = "amd64" ]; then \
-        wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.29.tgz -O mongodb.tgz; \
+        wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.6.tgz -O mongodb.tgz; \
     else \
         echo "Unsupported architecture: $ARCH" && exit 1; \
     fi \

@@ -41,7 +41,7 @@ echo "MongoDB started with PID: $MONGOD_PID"
 # Wait for MongoDB to be ready
 echo "Waiting for MongoDB to be ready..."
 for i in {1..30}; do
-    if mongosh --quiet --eval "db.adminCommand('ismaster')" >/dev/null 2>&1; then
+    if echo 'db.runCommand("ping")' | mongo --quiet localhost:27017/test >/dev/null 2>&1; then
         echo "MongoDB is ready!"
         break
     fi
@@ -55,8 +55,8 @@ done
 
 # Initialize MongoDB with sample data
 echo "Initializing database..."
-mongosh helloworld --eval "
-if (db.users.countDocuments() === 0) {
+mongo helloworld --eval "
+if (db.users.countDocuments({}) === 0) {
     print('Adding sample data...');
     db.users.insertMany([
         {name: 'Alice', email: 'alice@example.com', createdAt: new Date()},
