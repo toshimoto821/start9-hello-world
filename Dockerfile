@@ -55,7 +55,8 @@ COPY --from=frontend /app/build /var/www/html/
 # Copy configs
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY docker_entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker_entrypoint.sh
+COPY check-web.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker_entrypoint.sh /usr/local/bin/check-web.sh
 
 # Create MongoDB user and data directory
 RUN useradd -r -M -d /data -s /bin/false mongodb \
